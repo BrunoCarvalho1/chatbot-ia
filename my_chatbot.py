@@ -2,9 +2,13 @@ from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
 import chatbot_service
 
+chatbot = ChatBot('The sage')
+
+def conversation(text):
+    return chatbot.get_response(text)
+
 
 def start_training():
-    chatbot = ChatBot('The sage')
     # Instância do trainer da lib chatterbot
     trainer = ListTrainer(chatbot)
 

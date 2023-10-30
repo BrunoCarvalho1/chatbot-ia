@@ -1,13 +1,12 @@
 import ast
 import csv
+import translator
 
 
 def mount_array_4_training():
     training_array = []
     with open('training_file.txt') as training_file:
         for row in training_file:
-            question_prefix = f"Me recomende um filme de {row.split('.')[0][29:]}"
-            training_array.append(question_prefix.strip())
             training_array.append(row.strip())
     
     return training_array
@@ -24,5 +23,5 @@ def import_data_from_dataset():
                 response += f"{genre['name']}. Nome do filme: {row['title']}. Descrição do filme: {row['overview']}. Data de lançamento: {row['release_date']}"
 
                 with open('training_file.txt', 'a') as training_file:
-                    training_file.write(question)
-                    training_file.write(response)
+                    training_file.write(translator.translate_text(question).replace("recomendo", "recomende") + "\n")
+                    training_file.write(translator.translate_text(response).replace("recomendo", "recomende") + "\n")

@@ -1,2 +1,3 @@
 chatterbot==1.0.4
 requests
+deep_translator
