@@ -8,10 +8,10 @@ def main():
     # chatbot_service.import_data_from_dataset()
 
     # Remover o comentário para treinar o bot
-    # my_chatbot.start_training()
+    my_chatbot.start_training()
 
     # Instância do bot do telegram
-    my_telegram_bot.my_bot_instance()
+    # my_telegram_bot.my_bot_instance()
 
 
 if __name__ == "__main__":
