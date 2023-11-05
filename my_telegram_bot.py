@@ -2,11 +2,14 @@ import os
 from telegram import Update
 from telegram.ext import filters, ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler
 import my_chatbot
+import translator
 
 
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    movie = my_chatbot.conversation(update.message.text)
-    await context.bot.send_message(chat_id=update.effective_chat.id, text=str(movie))
+    question = translator.translate_text_to_english(update.message.text)
+    print(question)
+    response = translator.translate_text_to_portuguese(my_chatbot.conversation(question))
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=str(response))
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):

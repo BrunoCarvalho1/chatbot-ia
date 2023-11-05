@@ -19,18 +19,19 @@ def import_data_from_dataset():
             genres = []
 
             for genre in ast.literal_eval(row['genres']):
-                genres.append(genre['name'])
+                translated_genre = translator.translate_text_to_portuguese(genre['name'])
+                genres.append(translated_genre)
 
             # Variável para saber se é o último elemento do array
             temp = 1
 
             # Variável que irá construir a pergunta
-            question = "Recommend me an "
+            question = "Me recomende um filme de "
             response_genres = ""
             for genre in genres:
                 if temp == len(genres):
-                    question += f" and {genre}"
-                    response_genres += f" and {genre}"
+                    question += f" e {genre}\n"
+                    response_genres += f" e {genre}"
                     continue
 
                 if temp == 1:
@@ -43,8 +44,8 @@ def import_data_from_dataset():
                 response_genres += f", {genre}"
                 temp += 1
 
-            question += " movie\n"
-            response = "Of course! Here's an " + response_genres + f" movie! Film's name: {row['title']}. Overview: {row['overview']}. Release date: {row['release_date']}\n"
+            description = translator.translate_text_to_portuguese(row['overview'])
+            response = "Claro! Aqui está um filme de " + response_genres + f"! Nome do filme: {row['title']}. Descrição: {description} Data de lançamento: {row['release_date']}\n"
 
             with open('training_file.txt', 'a') as training_file:
                 training_file.write(question)
