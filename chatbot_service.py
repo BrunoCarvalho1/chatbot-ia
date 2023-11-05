@@ -3,6 +3,30 @@ import csv
 import translator
 
 
+def get_all_genres():
+    training_array = mount_array_4_training()
+    questions = []
+    final = []
+
+    for row in training_array:
+        if row.startswith("Me"):
+            if "Claro! Aqui está um filme de" in row:
+                continue
+
+            questions.append(row)
+
+    for row in questions:
+        row = row.split('Me recomende um filme de ')[1]
+
+        if " e " in row:
+            row = row.split(" e ")[1]
+            final.append(row)
+
+    final = set(final)
+
+    return sorted(final)
+
+
 def mount_array_4_training():
     training_array = []
     with open('training_file.txt') as training_file:

@@ -4,11 +4,14 @@ from telegram.ext import filters, ApplicationBuilder, ContextTypes, CommandHandl
 import re
 from datetime import datetime
 import my_chatbot
-import translator
+import chatbot_service
 
 
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     response = str(my_chatbot.conversation(update.message.text))
+
+    if "Aqui está um filme de e" in response:
+        response = response.replace("de e", "de")
 
     # Formatando o nome
     response = re.sub(r'(?=Nome do filme: )', "\n\n", response)
@@ -30,7 +33,11 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="Hello, world!")
+    genres = chatbot_service.get_all_genres()
+    response = "Gêneros\n\n"
+    for genre in genres:
+        response += f'{genre}\n'
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=response)
 
 
 def my_bot_instance():
